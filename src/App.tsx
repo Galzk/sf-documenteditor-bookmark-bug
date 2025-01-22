@@ -3,6 +3,7 @@ import { DocumentEditorContainerComponent, Toolbar, SpellChecker, Inject, Toolba
 import { ClickEventArgs } from '@syncfusion/ej2-navigations';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useEffect, useState } from 'react';
 import '@syncfusion/ej2-base/styles/material.css';
 import '@syncfusion/ej2-buttons/styles/material.css';
 import '@syncfusion/ej2-inputs/styles/material.css';
@@ -13,7 +14,6 @@ import '@syncfusion/ej2-splitbuttons/styles/material.css';
 import '@syncfusion/ej2-dropdowns/styles/material.css';
 import '@syncfusion/ej2-react-documenteditor/styles/material.css';
 import './App.css'
-import { useState } from 'react';
 
 // Register Syncfusion license
 registerLicense(import.meta.env.VITE_SYNCFUSION_KEY);
@@ -76,6 +76,16 @@ function App() {
     const sfdt: any = JSON.parse(documentEditor.serialize());
     setCurrentState(sfdt.sec[0].b);
   }
+
+  useEffect(() => {
+    if(!documentEditorContainer) return;
+    console.log("@enabled");
+    
+    documentEditorContainer.documentEditor.spellChecker.enableSpellCheck = true;
+    // documentEditorContainer.documentEditor.spellChecker.enableOptimizedSpellCheck = true;
+    documentEditorContainer.documentEditor.spellChecker.allowSpellCheckAndSuggestion = true;
+
+  }, [documentEditorContainer]);
 
   return (
     <div style={{ height: '100vh', width: '100%', display: 'flex' }}>
